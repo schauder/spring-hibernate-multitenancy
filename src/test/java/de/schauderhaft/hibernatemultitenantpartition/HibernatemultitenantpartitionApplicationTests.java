@@ -37,6 +37,7 @@ class HibernatemultitenantpartitionApplicationTests {
 		// makes sure we aren't fooled by JPAs cache
 		assertThat(reloaded).isNotSameAs(adam);
 
-	}
+		assertThat(adam.getTenant()).isEqualTo("vmware");
 
+	}
 }

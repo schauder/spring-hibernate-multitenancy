@@ -15,9 +15,10 @@
  */
 package de.schauderhaft.hibernatemultitenantpartition;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import org.hibernate.annotations.TenantId;
 
 @Entity
 public class Person {
@@ -25,6 +26,9 @@ public class Person {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@TenantId
+	private String tenant;
 
 	private String name;
 
@@ -42,6 +46,14 @@ public class Person {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(String tenant) {
+		this.tenant = tenant;
 	}
 
 
