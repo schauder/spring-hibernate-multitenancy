@@ -22,7 +22,7 @@ class HibernatemultitenantpartitionApplicationTests {
 	TransactionTemplate txTemplate;
 
 	@Autowired
-	CurrentTenantBean currentTenant;
+	TenantIdentifierResolver currentTenant;
 
 	@Test
 	void saveAndLoadPerson() {

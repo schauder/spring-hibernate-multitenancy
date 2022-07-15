@@ -16,7 +16,9 @@
 package de.schauderhaft.hibernatemultitenantpartition;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
 
 	private static final ThreadLocal<String> currentTenant = new ThreadLocal<>();
