@@ -15,24 +15,11 @@
  */
 package de.schauderhaft.hibernatemultitenantpartition;
 
-import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+import org.springframework.stereotype.Component;
 
-public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
-
-	private static final ThreadLocal<String> currentTenant = new ThreadLocal<>();
-
-	public static void setCurrentTenant(String tenant) {
-		currentTenant.set(tenant);
-	}
-
-	@Override
-	public String resolveCurrentTenantIdentifier() {
-		final String currentTenant = TenantIdentifierResolver.currentTenant.get();
-		return currentTenant == null || currentTenant.isBlank() ? "unknown" : currentTenant;
-	}
-
-	@Override
-	public boolean validateExistingCurrentSessions() {
-		return false;
+@Component
+public class CurrentTenantBean {
+	void setCurrentTenant(String tenant) {
+		TenantIdentifierResolver.setCurrentTenant(tenant);
 	}
 }

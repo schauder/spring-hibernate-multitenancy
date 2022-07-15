@@ -18,8 +18,13 @@ class HibernatemultitenantpartitionApplicationTests {
 	@Autowired
 	TransactionTemplate txTemplate;
 
+	@Autowired
+	CurrentTenantBean currentTenant;
+
 	@Test
 	void saveAndLoadPerson() {
+
+		currentTenant.setCurrentTenant("vmware");
 
 		Person adam = txTemplate.execute(tx ->
 				{
