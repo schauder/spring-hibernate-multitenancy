@@ -13,14 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.schauderhaft.hibernatemultitenantpartition;
+package de.schauderhaft.hibernatemultitenant.schema;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+import org.springframework.stereotype.Component;
 
-public interface Persons extends JpaRepository<Person, Long> {
-	static Person named(String name) {
-		Person person = new Person();
-		person.setName(name);
-		return person;
+@Component
+public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
+
+	private static String currentTenant = "unknown";
+
+	public static void setCurrentTenant(String tenant) {
+		currentTenant = tenant;
+	}
+
+	@Override
+	public String resolveCurrentTenantIdentifier() {
+		return currentTenant;
+	}
+
+	@Override
+	public boolean validateExistingCurrentSessions() {
+		return false;
 	}
 }

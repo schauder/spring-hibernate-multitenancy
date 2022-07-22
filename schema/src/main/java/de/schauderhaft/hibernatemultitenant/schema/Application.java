@@ -1,14 +1,13 @@
-package de.schauderhaft.hibernatemultitenantpartition;
+package de.schauderhaft.hibernatemultitenant.schema;
 
-import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate5.SpringBeanContainer;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -18,10 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-public class HibernatemultitenantpartitionApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HibernatemultitenantpartitionApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 
@@ -29,12 +28,12 @@ public class HibernatemultitenantpartitionApplication {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
 			DataSource dataSource,
 			CurrentTenantIdentifierResolver currentTenantIdentifierResolver,
-			ConfigurableListableBeanFactory beanFactory
+			MultiTenantConnectionProvider connectionProvider, ConfigurableListableBeanFactory beanFactory
 
 	) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 
-		em.setPackagesToScan("de.schauderhaft.hibernatemultitenantpartition");
+		em.setPackagesToScan("de.schauderhaft.hibernatemultitenant.schema");
 		em.setDataSource(dataSource);
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -42,6 +41,7 @@ public class HibernatemultitenantpartitionApplication {
 
 		Map<String, Object> properties = new HashMap<>();
 		properties.put(AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolver);
+		properties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, connectionProvider);
 		properties.put(AvailableSettings.BEAN_CONTAINER, new SpringBeanContainer(beanFactory));
 		em.setJpaPropertyMap(properties);
 

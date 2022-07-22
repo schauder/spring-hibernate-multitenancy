@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.schauderhaft.hibernatemultitenantpartition;
+package de.schauderhaft.hibernatemultitenant.schema;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,9 +26,6 @@ public class Person {
 	@Id
 	@GeneratedValue
 	private Long id;
-
-	@TenantId
-	private String tenant;
 
 	private String name;
 
@@ -47,15 +44,6 @@ public class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getTenant() {
-		return tenant;
-	}
-
-	public void setTenant(String tenant) {
-		this.tenant = tenant;
-	}
-
 
 	@Override
 	public String toString() {
