@@ -1,6 +1,5 @@
-package de.schauderhaft.hibernatemultitenantpartition;
+package de.schauderhaft.hibernatemultitenant.partition;
 
-import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -8,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate5.SpringBeanContainer;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -18,10 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-public class HibernatemultitenantpartitionApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HibernatemultitenantpartitionApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 
@@ -34,7 +32,7 @@ public class HibernatemultitenantpartitionApplication {
 	) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 
-		em.setPackagesToScan("de.schauderhaft.hibernatemultitenantpartition");
+		em.setPackagesToScan("de.schauderhaft.hibernatemultitenant.partition");
 		em.setDataSource(dataSource);
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

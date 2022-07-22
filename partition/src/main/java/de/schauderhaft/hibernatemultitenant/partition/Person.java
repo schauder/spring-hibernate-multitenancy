@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.schauderhaft.hibernatemultitenantpartition;
+package de.schauderhaft.hibernatemultitenant.partition;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.schauderhaft.hibernatemultitenantpartition;
+package de.schauderhaft.hibernatemultitenant.partition;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.stereotype.Component;
@@ -21,16 +21,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
 
-	private static final ThreadLocal<String> currentTenant = new ThreadLocal<>();
+	private static final String currentTenant = "unknown";
 
 	public static void setCurrentTenant(String tenant) {
-		currentTenant.set(tenant);
+		currentTenant = tenant;
 	}
 
 	@Override
 	public String resolveCurrentTenantIdentifier() {
-		final String currentTenant = TenantIdentifierResolver.currentTenant.get();
-		return currentTenant == null || currentTenant.isBlank() ? "unknown" : currentTenant;
+		return currentTenant;
 	}
 
 	@Override
