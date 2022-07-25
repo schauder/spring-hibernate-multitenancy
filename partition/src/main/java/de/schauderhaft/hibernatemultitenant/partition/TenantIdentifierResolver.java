@@ -21,9 +21,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
 
-	private static final String currentTenant = "unknown";
+	private String currentTenant = "unknown";
 
-	public static void setCurrentTenant(String tenant) {
+	public void setCurrentTenant(String tenant) {
 		currentTenant = tenant;
 	}
 
