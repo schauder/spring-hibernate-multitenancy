@@ -28,33 +28,26 @@ class ApplicationTests {
 	@Test
 	void saveAndLoadPerson() {
 
-		Person adam = createPerson(PIVOTAL, "Adam");
-		Person eve = createPerson(VMWARE, "Eve");
-
+		createPerson(PIVOTAL, "Adam");
+		createPerson(VMWARE, "Eve");
 
 		currentTenant.setCurrentTenant(VMWARE);
 		assertThat(persons.findAll()).extracting(Person::getName).containsExactly("Eve");
 
-
 		currentTenant.setCurrentTenant(PIVOTAL);
 		assertThat(persons.findAll()).extracting(Person::getName).containsExactly("Adam");
-
-
-
 	}
 
 	private Person createPerson(String schema, String name) {
 
 		currentTenant.setCurrentTenant(schema);
 
-		Person adam = txTemplate.execute(tx ->
-				{
-					Person person = Persons.named(name);
-					return persons.save(person);
-				}
+		Person person = txTemplate.execute(tx ->
+				persons.save(Persons.named(name))
 		);
 
-		assertThat(adam.getId()).isNotNull();
-		return adam;
+		assertThat(person.getId()).isNotNull();
+
+		return person;
 	}
 }

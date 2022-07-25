@@ -18,7 +18,6 @@ package de.schauderhaft.hibernatemultitenant.schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import org.hibernate.annotations.TenantId;
 
 @Entity
 public class Person {
