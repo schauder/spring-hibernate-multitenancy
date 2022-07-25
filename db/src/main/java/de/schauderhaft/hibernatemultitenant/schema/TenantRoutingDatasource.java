@@ -47,12 +47,11 @@ public class TenantRoutingDatasource extends AbstractRoutingDataSource {
 
 
 	private EmbeddedDatabase createEmbeddedDatabase(String name) {
+
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
 				.setName(name)
 				.addScript("manual-schema.sql")
 				.build();
 	}
-
-
 }
