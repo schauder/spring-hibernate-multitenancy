@@ -25,14 +25,9 @@ class ApplicationTests {
 	@Test
 	void saveAndLoadPerson() {
 
-		currentTenant.setCurrentTenant("vmware");
-
-		Person adam = txTemplate.execute(tx ->
-				{
-					Person person = Persons.named("Adam");
-					return persons.save(person);
-				}
-		);
+		Person adam = createPerson("vmware", "Adam");
+//		createPerson("pivotal", "Eve");
+//		createPerson("pivotal", "Adam");
 
 		assertThat(adam.getId()).isNotNull();
 
@@ -45,5 +40,17 @@ class ApplicationTests {
 
 		assertThat(adam.getTenant()).isEqualTo("vmware");
 
+	}
+
+	private Person createPerson(String schema, String name) {
+		currentTenant.setCurrentTenant(schema);
+
+		Person adam = txTemplate.execute(tx ->
+				{
+					Person person = Persons.named(name);
+					return persons.save(person);
+				}
+		);
+		return adam;
 	}
 }

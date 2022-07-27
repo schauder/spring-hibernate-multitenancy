@@ -31,16 +31,12 @@ class ApplicationTests {
 		Person adam = createPerson(PIVOTAL, "Adam");
 		Person eve = createPerson(VMWARE, "Eve");
 
-
 		currentTenant.setCurrentTenant(VMWARE);
 		assertThat(persons.findAll()).extracting(Person::getName).containsExactly("Eve");
 
 
 		currentTenant.setCurrentTenant(PIVOTAL);
 		assertThat(persons.findAll()).extracting(Person::getName).containsExactly("Adam");
-
-
-
 	}
 
 	private Person createPerson(String schema, String name) {

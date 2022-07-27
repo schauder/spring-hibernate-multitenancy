@@ -17,33 +17,7 @@ import java.util.Map;
 
 @SpringBootApplication
 public class Application {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-			CurrentTenantIdentifierResolver currentTenantIdentifierResolver,
-			MultiTenantConnectionProvider connectionProvider, ConfigurableListableBeanFactory beanFactory
-
-	) {
-		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-
-		em.setPackagesToScan("de.schauderhaft.hibernatemultitenant.schema");
-
-		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		em.setJpaVendorAdapter(vendorAdapter);
-
-		Map<String, Object> properties = new HashMap<>();
-		properties.put(AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolver);
-		properties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, connectionProvider);
-		properties.put(AvailableSettings.BEAN_CONTAINER, new SpringBeanContainer(beanFactory));
-		properties.put(AvailableSettings.DIALECT, "org.hibernate.dialect.H2Dialect");
-		em.setJpaPropertyMap(properties);
-
-		return em;
-	}
-
-
 }

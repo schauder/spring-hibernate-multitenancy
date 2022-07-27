@@ -15,8 +15,10 @@
  */
 package de.schauderhaft.hibernatemultitenant.schema;
 
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.jdbc.datasource.lookup.BeanFactoryDataSourceLookup;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +29,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class NoOpConnectionProvider implements MultiTenantConnectionProvider {
+public class NoOpConnectionProvider implements MultiTenantConnectionProvider, HibernatePropertiesCustomizer {
 
 	@Autowired
 	DataSource dataSource;
@@ -66,5 +68,10 @@ public class NoOpConnectionProvider implements MultiTenantConnectionProvider {
 	@Override
 	public <T> T unwrap(Class<T> aClass) {
 		throw new UnsupportedOperationException("Can't unwrap this.");
+	}
+
+	@Override
+	public void customize(Map<String, Object> hibernateProperties) {
+		hibernateProperties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, this);
 	}
 }
